@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>book bank</title>
+    <link rel="shortcut icon" type="image" href="./image/logo2.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    
+    <style>
+        .bookCard {
+            display: flex;
+            flex-direction: column;
+            border: 2px solid darkblue;
+            max-width: 240px;
+            justify-content: space-between;
+            min-height: 300px;
+            padding: 5px;
+            border-radius: 8px;
+            background-color: #f0f8ff;
+        }
+
+        .addToCartBtn {
+            border: none;
+            background-color: darkblue;
+            padding: 8px 16px;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: auto;
+            transition: background-color 0.3s;
+        }
+
+        .addToCartBtn:hover {
+            background-color: #003366;
+        }
+
+        #bookContainer {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            width: 100vw;
+            padding: 16px;
+        }
+
+        #searchBar {
+            padding: 8px;
+            margin: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #searchButton {
+            padding: 8px 16px;
+            border: none;
+            background-color: darkblue;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #searchButton:hover {
+            background-color: #003366;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-navbar">
+        <div class="top-icons">
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-instagram"></i>
+        </div>
+        <div class="other-links">
+            <button id="btn-login"><a href="login.html">Login</a></button>
+            <button id="btn-signup"><a href="signup.html">Sign up</a></button>
+
+            <i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg" id="navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><img src="./image/logo.png" alt="" width="180px"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span><i class="fa-solid fa-bars" style="color: white;"></i></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="product.html">BOOKS</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Category
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #1c1c50;">
+                    <li><a class="dropdown-item" href="#">Novels</a></li>
+                    <li><a class="dropdown-item" href="#">Short Stories</a></li>
+                    <li><a class="dropdown-item" href="#">Science Fiction</a></li>
+                    <li><a class="dropdown-item" href="#">Mystery</a></li>
+                    <li><a class="dropdown-item" href="#">Fantasy</a></li>
+                    <li><a class="dropdown-item" href="#">Horror</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact Us</a>
+              </li>
+            </ul>
+            <form class="d-flex " style="padding: 8px; background-color: white; border-radius: 8px; padding: 4px 16px; margin-right: 36px;">
+             
+                <a style="color: black; text-decoration: none; " href="./search.html">Search</a>
+              </form>
+          </div>
+        </div>
+      </nav>
+   
+    <div>
+        
+        <input type="text" placeholder="Search" id="searchBar">
+        <button id="searchButton">Search</button>
+        <div id="bookContainer" style="display: flex; gap: 8px; flex-wrap: wrap; width: 100vw;"></div>
+
+    </div>
+</body>
+<script>
+    const books = [
+        {
+            title: "Harry Potter and the Goblets",
+            price: 230,
+            description: "An adventurous tale in the world of magic.",
+        },
+        {
+            title: "The Hobbit",
+            price: 180,
+            description: "A prelude to The Lord of the Rings by J.R.R. Tolkien.",
+        },
+        {
+            title: "1984",
+            price: 200,
+            description: "George Orwell's dystopian vision of the future.",
+        },
+        {
+            title: "To Kill a Mockingbird",
+            price: 150,
+            description: "A novel by Harper Lee about racial injustice.",
+        },
+        {
+            title: "The Great Gatsby",
+            price: 170,
+            description: "F. Scott Fitzgerald's classic story of the American dream.",
+        },
+        {
+            title: "Pride and Prejudice",
+            price: 190,
+            description: "A romantic novel by Jane Austen.",
+        },
+        {
+            title: "The Catcher in the Rye",
+            price: 160,
+            description: "J.D. Salinger's story of teenage angst.",
+        },
+        {
+            title: "Moby Dick",
+            price: 220,
+            description: "Herman Melville's tale of a man vs. whale.",
+        },
+        {
+            title: "The Lord of the Rings",
+            price: 300,
+            description: "An epic high fantasy novel by J.R.R. Tolkien.",
+        },
+        {
+            title: "Jane Eyre",
+            price: 180,
+            description: "A classic novel by Charlotte Brontë.",
+        },
+        {
+            title: "Crime and Punishment",
+            price: 210,
+            description: "Fyodor Dostoevsky's psychological drama.",
+        },
+        {
+            title: "War and Peace",
+            price: 260,
+            description: "A sweeping Russian epic by Leo Tolstoy.",
+        },
+        {
+            title: "The Odyssey",
+            price: 170,
+            description: "Homer's epic tale of Odysseus's journey home.",
+        },
+        {
+            title: "The Divine Comedy",
+            price: 230,
+            description: "Dante's journey through Hell, Purgatory, and Heaven.",
+        },
+        {
+            title: "Wuthering Heights",
+            price: 160,
+            description: "Emily Brontë's tale of love and revenge.",
+        },
+        {
+            title: "The Alchemist",
+            price: 140,
+            description: "Paulo Coelho's allegorical novel about following dreams.",
+        },
+        {
+            title: "Frankenstein",
+            price: 190,
+            description: "Mary Shelley's classic science fiction novel.",
+        },
+        {
+            title: "Dracula",
+            price: 180,
+            description: "Bram Stoker's horror classic.",
+        },
+        {
+            title: "The Kite Runner",
+            price: 200,
+            description: "Khaled Hosseini's tale of redemption.",
+        },
+        {
+            title: "The Book Thief",
+            price: 210,
+            description: "A powerful story of WWII narrated by Death.",
+        },
+        {
+            title: "Anna Karenina",
+            price: 230,
+            description: "Leo Tolstoy's tragic love story.",
+        },
+        {
+            title: "The Chronicles of Narnia",
+            price: 280,
+            description: "C.S. Lewis's fantasy series for children.",
+        },
+        {
+            title: "The Hunger Games",
+            price: 150,
+            description: "A dystopian novel by Suzanne Collins.",
+        },
+        {
+            title: "The Shining",
+            price: 190,
+            description: "Stephen King's horror masterpiece.",
+        },
+        {
+            title: "Brave New World",
+            price: 180,
+            description: "Aldous Huxley's dystopian vision of the future.",
+        },
+        {
+            title: "The Fault in Our Stars",
+            price: 160,
+            description: "John Green's heartbreaking romance novel.",
+        },
+        {
+            title: "Gone Girl",
+            price: 210,
+            description: "A psychological thriller by Gillian Flynn.",
+        },
+        {
+            title: "The Girl on the Train",
+            price: 190,
+            description: "A psychological thriller by Paula Hawkins.",
+        },
+        {
+            title: "The Handmaid's Tale",
+            price: 200,
+            description: "Margaret Atwood's dystopian novel.",
+        },
+        {
+            title: "Dune",
+            price: 230,
+            description: "Frank Herbert's science fiction epic.",
+        },
+        {
+            title: "The Martian",
+            price: 170,
+            description: "Andy Weir's gripping tale of survival on Mars.",
+        },
+        {
+            title: "The Da Vinci Code",
+            price: 180,
+            description: "Dan Brown's thrilling mystery novel.",
+        },
+        {
+            title: "Life of Pi",
+            price: 190,
+            description: "Yann Martel's story of survival at sea.",
+        },
+        {
+            title: "The Picture of Dorian Gray",
+            price: 160,
+            description: "Oscar Wilde's only novel.",
+        },
+        {
+            title: "The Old Man and the Sea",
+            price: 150,
+            description: "Ernest Hemingway's story of struggle and triumph.",
+        },
+        {
+            title: "The Catch-22",
+            price: 210,
+            description: "Joseph Heller's satirical war novel.",
+        },
+        {
+            title: "Slaughterhouse-Five",
+            price: 190,
+            description: "Kurt Vonnegut's anti-war classic.",
+        },
+        {
+            title: "One Hundred Years of Solitude",
+            price: 220,
+            description: "Gabriel Garcia Marquez's magical realism masterpiece.",
+        },
+        {
+            title: "Beloved",
+            price: 200,
+            description: "Toni Morrison's haunting novel about slavery.",
+        },
+        {
+            title: "The Road",
+            price: 180,
+            description: "Cormac McCarthy's post-apocalyptic journey.",
+        },
+        {
+            title: "The Little Prince",
+            price: 140,
+            description: "Antoine de Saint-Exupéry's timeless tale of friendship.",
+        },
+        {
+            title: "A Tale of Two Cities",
+            price: 190,
+            description: "Charles Dickens's story set during the French Revolution.",
+        },
+        {
+            title: "The Secret Garden",
+            price: 160,
+            description: "A children's novel by Frances Hodgson Burnett.",
+        },
+        {
+            title: "Les Misérables",
+            price: 240,
+            description: "Victor Hugo's epic story of justice and redemption.",
+        },
+    ];
+
+    const searchBar = document.querySelector("#searchBar");
+    const searchButton = document.querySelector("#searchButton");
+    const bookContainer = document.querySelector("#bookContainer");
+    books.forEach((book)=>{ const bookCard = document.createElement("div");
+            bookCard.classList.add("bookCard");
+            bookCard.innerHTML =
+                `
+                    <h1> ${book.title}</h1>
+                    <h3>${book.price}</h3>
+                    <p>${book.description}</p>
+                    <button class='addToCartBtn'>Add To Cart</button>
+                `;
+            bookContainer.appendChild(bookCard);})
+    const search = (toSearch) => {
+        const filteredData = books.filter((book) => book.title.includes(toSearch));
+        return filteredData;
+    }
+    searchButton.addEventListener("click", () => {
+        const data = search(searchBar.value);
+        bookContainer.innerHTML = "";
+        for (let book of data) {
+            const bookCard = document.createElement("div");
+            bookCard.classList.add("bookCard");
+            bookCard.innerHTML =
+                `
+                    <h1> ${book.title}</h1>
+                    <h3>${book.price}</h3>
+                    <p>${book.description}</p>
+                    <button class='addToCartBtn'>Add To Cart</button>
+                `;
+            bookContainer.appendChild(bookCard);
+        }
+    });
+
+</script>
+
+</html>
